@@ -1,6 +1,10 @@
-# Project Name
+# Java/Spring templates for "Build a Java app for Azure Cosmos DB" MSLearn module
 
-(short, 1-3 sentenced, description of the project)
+In [Build a Java app for Azure Cosmos DB](), you will build a Java console application to create, update, and delete user records, query your data, and perform stored procedures using Java.
+
+We have provided a GitHub repo which you may use as a template for your application.
+
+We will use the Maven package manager to structure our project and pull in dependencies.
 
 ## Features
 
