@@ -11,6 +11,6 @@ public class CosmosApp {
     protected static Logger logger = LoggerFactory.getLogger(CosmosApp.class.getSimpleName());
 
     public static void main(String[] args) {
-	logger.info("Hello world.");
+	logger.info("Hello World.");
     }
 }
