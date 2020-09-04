@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.azure</groupId>
-    <artifactId>azure-cosmos-java-sql-app-mslearn</artifactId>
+    <artifactId>mslearnbasicapp</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>MSLearn sample Java app
     </name>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>com.azure</groupId>
             <artifactId>azure-cosmos</artifactId>
-            <version>latest</version>
+            <version>4.3.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
