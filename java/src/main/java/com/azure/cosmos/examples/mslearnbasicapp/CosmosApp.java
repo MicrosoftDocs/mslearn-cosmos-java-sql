@@ -145,6 +145,7 @@ public final class CosmosApp {
         readUserDocument(maxaxam);
         maxaxam.setLastName("Suh");
         replaceUserDocument(maxaxam);
+        deleteUserDocument(maxaxam);
         client.close();
     }
 
@@ -194,6 +195,20 @@ public final class CosmosApp {
             logger.info("Replaced User {}", user.getId());
         } catch (CosmosException de) {
             logger.error("Failed to replace User {}", user.getUserId());
+        }
+    }
+
+    /**
+     * Take in a Java POJO argument, extract id and partition key,
+     * and delete the corresponding document.
+     * @param user User POJO representing the document update.
+     */
+    private static void deleteUserDocument(final User user) {
+        try {
+            container.deleteItem(user.getId(), new PartitionKey(user.getUserId())).block();
+            logger.info("Deleted user {}", user.getId());
+        } catch (CosmosException de) {
+            logger.error("User {} could not be deleted.", user.getId());
         }
     }
 }
