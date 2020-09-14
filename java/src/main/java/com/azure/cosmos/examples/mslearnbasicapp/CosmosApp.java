@@ -15,7 +15,9 @@ import com.azure.cosmos.examples.mslearnbasicapp.datatypes.User;
 import com.azure.cosmos.implementation.HttpConstants;
 import com.azure.cosmos.models.CosmosItemRequestOptions;
 import com.azure.cosmos.models.CosmosItemResponse;
+import com.azure.cosmos.models.CosmosQueryRequestOptions;
 import com.azure.cosmos.models.PartitionKey;
+import com.azure.cosmos.util.CosmosPagedFlux;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -24,6 +26,7 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class CosmosApp {
 
@@ -145,6 +148,7 @@ public final class CosmosApp {
         readUserDocument(maxaxam);
         maxaxam.setLastName("Suh");
         replaceUserDocument(maxaxam);
+        executeSimpleQuery("SELECT * FROM User WHERE User.lastName = 'Pindakova'");
         deleteUserDocument(maxaxam);
         client.close();
     }
@@ -210,5 +214,33 @@ public final class CosmosApp {
         } catch (CosmosException de) {
             logger.error("User {} could not be deleted.", user.getId());
         }
+    }
+
+    /**
+     * Execute a custom query on the Azure Cosmos DB container.
+     * @param query Query String.
+     */
+    private static void executeSimpleQuery(final String query) {
+
+        final int preferredPageSize = 10;
+        CosmosQueryRequestOptions queryOptions = new CosmosQueryRequestOptions();
+
+        CosmosPagedFlux<User> pagedFluxResponse = container.queryItems(
+                query, queryOptions, User.class);
+
+        logger.info("Running SQL query...");
+
+        pagedFluxResponse.byPage(preferredPageSize).flatMap(fluxResponse -> {
+            logger.info("Got a page of query result with " + fluxResponse.getResults().size()
+                    + " items(s) and request charge of " + fluxResponse.getRequestCharge());
+
+            logger.info("Item Ids " + fluxResponse
+                    .getResults()
+                    .stream()
+                    .map(User::getId)
+                    .collect(Collectors.toList()));
+
+            return Flux.empty();
+        }).blockLast();
     }
 }
