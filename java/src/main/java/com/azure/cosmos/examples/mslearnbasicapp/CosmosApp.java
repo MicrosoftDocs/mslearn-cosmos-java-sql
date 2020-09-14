@@ -145,6 +145,10 @@ public final class CosmosApp {
         client.close();
     }
 
+    /**
+     * Take in list of Java POJOs, check if each exists, and if not insert it.
+     * @param users List of User POJOs to insert.
+     */
     private static void createUserDocumentsIfNotExist(final List<User> users) {
         Flux.fromIterable(users).flatMap(user -> {
             try {
@@ -156,5 +160,23 @@ public final class CosmosApp {
                 return container.createItem(user, new PartitionKey(user.getUserId()), new CosmosItemRequestOptions());
             }
         }).blockLast();
+    }
+
+    /**
+     * Take in a Java POJO argument, extract id and partition key, and read the corresponding document from the container.
+     * In this case the id is the partition key.
+     * @param user User POJO to pull id and partition key from.
+     */
+    private static CosmosItemResponse<User> readUserDocument(final User user) {
+        CosmosItemResponse<User> userReadResponse = null;
+
+        try {
+            userReadResponse = container.readItem(user.getId(), new PartitionKey(user.getUserId()), User.class).block();
+            logger.info("Read user {}", user.getId());
+        } catch (CosmosException de) {
+            logger.error("Failed to read user {}", user.getId(), de);
+        }
+
+        return userReadResponse;
     }
 }
