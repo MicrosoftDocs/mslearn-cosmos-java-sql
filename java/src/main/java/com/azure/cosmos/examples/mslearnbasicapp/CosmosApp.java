@@ -80,35 +80,34 @@ public final class CosmosApp {
         logger.info("Database and container validation complete");
 
         User maxaxam = new User(
-                "1",
-                "maxaxam",
-                "Axam",
-                "Max",
-                "maxaxam@contoso.com",
-                "2.0",
-                new ArrayList<ShippingPreference>(Arrays.asList(
-                        new ShippingPreference(
-                                1,
-                                "90 W 8th St",
-                                "",
-                                "New York",
-                                "NY",
-                                "10001",
-                                "USA"
-                        )
-                )),
-                new ArrayList<OrderHistory>(Arrays.asList(
-                        new OrderHistory(
-                                "1000",
-                                "08/17/2018",
-                                "52.49"
-                        )
-                )),
-                new ArrayList<CouponsUsed>(Arrays.asList(
-                        new CouponsUsed(
-                                "A7B89F"
-                        )
-                ))
+            "1",
+            "maxaxam",
+            "Axam",
+            "Max",
+            "maxaxam@contoso.com",
+            "2.0",
+            new ShippingPreference(
+                1,
+                "90 W 8th St",
+                "",
+                "New York",
+                "NY",
+                "10001",
+                "USA"
+            ),
+            new ArrayList<OrderHistory>(Arrays.asList(
+                new OrderHistory(
+                    "3",
+                    "1000",
+                    "08/17/2018",
+                    "52.49"
+                )
+            )),
+            new ArrayList<CouponsUsed>(Arrays.asList(
+                new CouponsUsed(
+                    "A7B89F"
+                )
+            ))
         );
 
         User nelapin = new User(
@@ -118,37 +117,27 @@ public final class CosmosApp {
                 "Nela",
                 "nelapin@contoso.com",
                 "8.50",
-                new ArrayList<ShippingPreference>(Arrays.asList(
-                        new ShippingPreference(
-                                1,
-                                "505 NW 5th St",
-                                "",
-                                "New York",
-                                "NY",
-                                "10001",
-                                "USA"
-                        ),
-                        new ShippingPreference(
-                                2,
-                                "505 NW 5th St",
-                                "",
-                                "New York",
-                                "NY",
-                                "10001",
-                                "USA"
-                        )
-                )),
+                new ShippingPreference(
+                    1,
+                    "505 NW 5th St",
+                    "",
+                    "New York",
+                    "NY",
+                    "10001",
+                    "USA"
+                ),
                 new ArrayList<OrderHistory>(Arrays.asList(
-                        new OrderHistory(
-                                "1001",
-                                "08/17/2018",
-                                "105.89"
-                        )
+                    new OrderHistory(
+                        "4",
+                        "1001",
+                        "08/17/2018",
+                        "105.89"
+                    )
                 )),
                 new ArrayList<CouponsUsed>(Arrays.asList(
-                        new CouponsUsed(
-                                "Fall 2018"
-                        )
+                    new CouponsUsed(
+                        "Fall 2018"
+                    )
                 ))
         );
 
