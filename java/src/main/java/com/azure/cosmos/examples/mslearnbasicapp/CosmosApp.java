@@ -7,9 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public final class CosmosApp {
 
-    /**
-     * For application to log INFO and ERROR.
-     */
+    /** For application to log INFO and ERROR. */
     private static Logger logger = LoggerFactory.getLogger(CosmosApp.class.getSimpleName());
 
     private CosmosApp() {

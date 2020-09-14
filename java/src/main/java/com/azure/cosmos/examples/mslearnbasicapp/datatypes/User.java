@@ -8,48 +8,30 @@ import java.util.List;
 @Data
 public class User {
 
-    /**
-     * Document ID (required by Azure Cosmos DB).
-     */
+    /** Document ID (required by Azure Cosmos DB). */
     private String id;
 
-    /**
-     * User ID.
-     */
+    /** User ID. */
     private String userId;
 
-    /**
-     * User last name.
-     */
+    /** User last name. */
     private String lastName;
 
-    /**
-     * User first name.
-     */
+    /** User first name. */
     private String firstName;
 
-    /**
-     * User email address.
-     */
+    /** User email address. */
     private String email;
 
-    /**
-     * User dividend setting.
-     */
+    /** User dividend setting. */
     private String dividend;
 
-    /**
-     * User shipping preferences.
-     */
+    /** User shipping preferences. */
     private ShippingPreference shippingPreference;
 
-    /**
-     * User order history.
-     */
+    /** User order history. */
     private List<OrderHistory> orderHistory;
 
-    /**
-     * Coupons recorded by the user.
-     */
+    /** Coupons recorded by the user. */
     private List<CouponsUsed> coupons;
 }

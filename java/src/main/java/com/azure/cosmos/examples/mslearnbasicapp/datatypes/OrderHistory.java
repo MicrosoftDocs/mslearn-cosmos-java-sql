@@ -7,23 +7,15 @@ import lombok.Data;
 @Data
 public class OrderHistory {
 
-    /**
-     * Document ID (Azure Cosmos DB requirement).
-     */
+    /** Document ID (Azure Cosmos DB requirement). */
     private String id;
 
-    /**
-     * Order ID.
-     */
+    /** Order ID. */
     private String orderId;
 
-    /**
-     * Date order shipped.
-     */
+    /** Date order shipped. */
     private String dateShipped;
 
-    /**
-     * Total cost of order.
-     */
+    /** Total cost of order. */
     private String total;
 }
