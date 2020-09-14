@@ -145,20 +145,16 @@ public final class CosmosApp {
         client.close();
     }
 
-    private static List<Object> createUserDocumentsIfNotExist(final List<User> users) {
-        return Flux.fromIterable(users).flatMap(user -> {
-            return Mono.zip(container.readItem(user.getId(), new PartitionKey(user.getUserId()), User.class), Mono.just(user));
-        }).flatMap(userResponseTuple -> {
-            CosmosItemResponse<User> userReadResponse = userResponseTuple.getT1();
-            User user = userResponseTuple.getT2();
-
-            if (userReadResponse.getStatusCode() == HttpConstants.StatusCodes.OK) {
+    private static void createUserDocumentsIfNotExist(final List<User> users) {
+        Flux.fromIterable(users).flatMap(user -> {
+            try {
+                container.readItem(user.getId(), new PartitionKey(user.getUserId()), User.class).block();
                 logger.info("User {} already exists in the database", user.getId());
-                return Mono.just(userReadResponse);
-            } else {
+                return Mono.empty();
+            } catch (Exception err) {
                 logger.info("Creating User {}", user.getId());
-                return Mono.just(container.createItem(user, new PartitionKey(user.getUserId()), new CosmosItemRequestOptions()));
+                return container.createItem(user, new PartitionKey(user.getUserId()), new CosmosItemRequestOptions());
             }
-        }).buffer().next().block();
+        }).blockLast();
     }
 }
