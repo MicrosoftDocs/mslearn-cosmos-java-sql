@@ -7,6 +7,7 @@ import com.azure.cosmos.CosmosAsyncClient;
 import com.azure.cosmos.CosmosAsyncContainer;
 import com.azure.cosmos.CosmosAsyncDatabase;
 import com.azure.cosmos.CosmosClientBuilder;
+import com.azure.cosmos.CosmosException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,14 @@ public final class CosmosApp {
      * @param args Command line arguments
      */
     public static void main(final String[] args) {
-        logger.info("Hello World.");
+        try {
+            CosmosApp p = new CosmosApp();
+            p.basicOperations();
+        } catch (CosmosException e) {
+            logger.error("Failed while executing app.", e);
+        } finally {
+            logger.info("End of demo, press any key to exit.");
+        }
     }
 
     /** Database access code. */
