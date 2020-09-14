@@ -5,11 +5,22 @@ package com.azure.cosmos.examples.mslearnbasicapp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CosmosApp {
+public final class CosmosApp {
 
-    protected static Logger logger = LoggerFactory.getLogger(CosmosApp.class.getSimpleName());
+    /**
+     * For application to log INFO and ERROR.
+     */
+    private static Logger logger = LoggerFactory.getLogger(CosmosApp.class.getSimpleName());
 
-    public static void main(String[] args) {
-	logger.info("Hello World.");
+    private CosmosApp() {
+        // not called
+    }
+
+    /**
+     * Main.
+     * @param args Command line arguments
+     */
+    public static void main(final String[] args) {
+        logger.info("Hello World.");
     }
 }
