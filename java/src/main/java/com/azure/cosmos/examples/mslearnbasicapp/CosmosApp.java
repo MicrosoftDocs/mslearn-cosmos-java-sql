@@ -142,6 +142,7 @@ public final class CosmosApp {
         );
 
         createUserDocumentsIfNotExist(new ArrayList(Arrays.asList(maxaxam, nelapin)));
+        readUserDocument(maxaxam);
         client.close();
     }
 
