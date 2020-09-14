@@ -10,19 +10,13 @@ import org.slf4j.LoggerFactory;
 
 public final class CosmosApp {
 
-    /**
-     * For application to log INFO and ERROR.
-     */
+    /** For application to log INFO and ERROR. */
     private static Logger logger = LoggerFactory.getLogger(CosmosApp.class.getSimpleName());
 
-    /**
-     * Azure Cosmos DB endpoint URI.
-     */
+    /** Azure Cosmos DB endpoint URI. */
     private static String endpointUri = "<your-cosmosdb-hostname>";
 
-    /**
-     * Azure Cosmos DB primary key.
-     */
+    /** Azure Cosmos DB primary key. */
     private static String primaryKey = "<your-cosmosdb-master-key>";
 
     /** Azure Cosmos DB client instance. */
