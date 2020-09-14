@@ -180,4 +180,18 @@ public final class CosmosApp {
 
         return userReadResponse;
     }
+
+    /**
+     * Take in a Java POJO argument, extract id and partition key,
+     * and replace the existing document with the same id and partition key to match.
+     * @param user User POJO representing the document update.
+     */
+    private static void replaceUserDocument(final User user) {
+        try {
+            CosmosItemResponse<User> userReplaceResponse = container.replaceItem(user, user.getId(), new PartitionKey(user.getUserId())).block();
+            logger.info("Replaced User {}", user.getId());
+        } catch (CosmosException de) {
+            logger.error("Failed to replace User {}", user.getUserId());
+        }
+    }
 }
