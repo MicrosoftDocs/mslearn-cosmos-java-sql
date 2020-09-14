@@ -143,6 +143,8 @@ public final class CosmosApp {
 
         createUserDocumentsIfNotExist(new ArrayList(Arrays.asList(maxaxam, nelapin)));
         readUserDocument(maxaxam);
+        maxaxam.setLastName("Suh");
+        replaceUserDocument(maxaxam);
         client.close();
     }
 
