@@ -7,8 +7,6 @@ import lombok.Data;
 @Data
 public class CouponsUsed {
 
-    /**
-     * Code on physical coupon and associated in the system.
-     */
+    /** Code on physical coupon and associated in the system. */
     private String couponCode;
 }
