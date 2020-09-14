@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 package com.azure.cosmos.examples.mslearnbasicapp;
 
+import com.azure.cosmos.ConsistencyLevel;
 import com.azure.cosmos.CosmosAsyncClient;
 import com.azure.cosmos.CosmosAsyncContainer;
 import com.azure.cosmos.CosmosAsyncDatabase;
+import com.azure.cosmos.CosmosClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,5 +40,23 @@ public final class CosmosApp {
      */
     public static void main(final String[] args) {
         logger.info("Hello World.");
+    }
+
+    /** Database access code. */
+    private void basicOperations() {
+        client = new CosmosClientBuilder()
+                .endpoint(endpointUri)
+                .key(primaryKey)
+                .consistencyLevel(ConsistencyLevel.EVENTUAL)
+                .directMode()
+                .contentResponseOnWriteEnabled(true)
+                .buildAsyncClient();
+
+        database = client.getDatabase("Users");
+        container = database.getContainer("WebCustomers");
+
+        logger.info("Database and container validation complete");
+
+        client.close();
     }
 }
