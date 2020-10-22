@@ -2,10 +2,15 @@
 // Licensed under the MIT License.
 package com.azure.cosmos.examples.springexamples.common;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     /**

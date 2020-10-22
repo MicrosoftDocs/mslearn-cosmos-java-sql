@@ -2,43 +2,33 @@
 // Licensed under the MIT License.
 package com.azure.cosmos.examples.springexamples.common;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ShippingPreference {
 
-    /**
-     * User's preferred shipping priority.
-     */
+    /** User's preferred shipping priority. */
     private int priority;
 
-    /**
-     * User address line 1.
-     */
+    /** User address line 1. */
     private String addressLine1;
 
-    /**
-     * User address line 2.
-     */
+    /** User address line 2. */
     private String addressLine2;
 
-    /**
-     * User address city.
-     */
+    /** User address city. */
     private String city;
 
-    /**
-     * User address state.
-     */
+    /** User address state. */
     private String state;
 
-    /**
-     * User address zip code.
-     */
+    /** User address zip code. */
     private String zipCode;
 
-    /**
-     * User address country.
-     */
+    /** User address country. */
     private String country;
 }

@@ -5,6 +5,8 @@ package com.azure.cosmos.examples.springexamples;
 import com.azure.cosmos.examples.springexamples.common.CouponsUsed;
 import com.azure.cosmos.examples.springexamples.common.OrderHistory;
 import com.azure.cosmos.examples.springexamples.common.ShippingPreference;
+import com.azure.cosmos.models.CosmosItemRequestOptions;
+import com.azure.cosmos.models.PartitionKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,12 @@ import reactor.core.publisher.Flux;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 @SpringBootApplication
 public class CosmosSample implements CommandLineRunner {
 
     private final Logger logger = LoggerFactory.getLogger(CosmosSample.class);
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private ReactiveUserRepository reactiveUserRepository;
@@ -33,6 +33,8 @@ public class CosmosSample implements CommandLineRunner {
     }
 
     public void run(String... var1) {
+
+        // Create User POJO instances
 
         User maxaxam = new User(
                 "1",
@@ -96,6 +98,10 @@ public class CosmosSample implements CommandLineRunner {
                 ))
         );
 
+        createUserDocumentsIfNotExist(new ArrayList(Arrays.asList(maxaxam, nelapin)));
+
+        /*
+
         logger.info("Using sync repository");
 
         // <Delete>
@@ -140,5 +146,26 @@ public class CosmosSample implements CommandLineRunner {
         }).subscribe();
 
         // </Query>
+
+
+         */
+    }
+
+    /**
+     * Take in list of Java POJOs, check if each exists, and if not insert it.
+     * @param users List of User POJOs to insert.
+     */
+    private void createUserDocumentsIfNotExist(final List<User> users) {
+        Flux.fromIterable(users).flatMap(user -> {
+            try {
+                return this.reactiveUserRepository.findByIdAndLastName(user.getId(), user.getLastName()).map(u -> {
+                    logger.info("User {} already exists in the database", u.getId());
+                    return Flux.empty();
+                }).blockLast();
+            } catch (Exception err) {
+                logger.info("Creating User {}", user.getId());
+                return this.reactiveUserRepository.save(user);
+            }
+        }).blockLast();
     }
 }

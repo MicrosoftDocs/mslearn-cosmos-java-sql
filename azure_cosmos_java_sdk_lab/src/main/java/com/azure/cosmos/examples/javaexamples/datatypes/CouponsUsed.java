@@ -5,6 +5,8 @@ package com.azure.cosmos.examples.mslearnbasicapp.datatypes;
 import lombok.Data;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CouponsUsed {
 
     /**
