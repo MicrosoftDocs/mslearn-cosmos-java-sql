@@ -12,7 +12,7 @@
 
     <properties>
         <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
-        <azure.spring.data.cosmos.version>3.0.0</azure.spring.data.cosmos.version>
+        <azure.spring.data.cosmos.version>3.1.0</azure.spring.data.cosmos.version>
     </properties>
 
     <dependencies>
@@ -75,6 +75,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
             </plugin>
         </plugins>
     </build>

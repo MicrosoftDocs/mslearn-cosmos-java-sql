@@ -152,20 +152,13 @@ public class CosmosSample implements CommandLineRunner {
     }
 
     /**
-     * Take in list of Java POJOs, check if each exists, and if not insert it.
+     * Take in list of Java POJOs and insert them into the database.
      * @param users List of User POJOs to insert.
      */
     private void createUserDocumentsIfNotExist(final List<User> users) {
         Flux.fromIterable(users).flatMap(user -> {
-            try {
-                return this.reactiveUserRepository.findByIdAndLastName(user.getId(), user.getLastName()).map(u -> {
-                    logger.info("User {} already exists in the database", u.getId());
-                    return Flux.empty();
-                }).blockLast();
-            } catch (Exception err) {
-                logger.info("Creating User {}", user.getId());
-                return this.reactiveUserRepository.save(user);
-            }
+            logger.info("Creating User {}", user.getId());
+            return this.reactiveUserRepository.save(user);
         }).blockLast();
     }
 }
