@@ -10,70 +10,70 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends CosmosRepository<User, String> {
+public interface WebCustomerRepository extends CosmosRepository<WebCustomer, String> {
 
-    Iterable<User> findByFirstName(String firstName);
+    Iterable<WebCustomer> findByFirstName(String firstName);
 
-    User findByIdAndLastName(String id, String lastName);
+    WebCustomer findByIdAndLastName(String id, String lastName);
 
     // Query for all documents
     @Query(value = "SELECT * FROM c")
-    List<User> getAllUsers();
+    List<WebCustomer> getAllUsers();
 
     // Query for equality using ==
     @Query(value = "SELECT * FROM c WHERE c.id = @documentId")
-    List<User> getUsersWithEquality(@Param("documentId") String documentId);
+    List<WebCustomer> getUsersWithEquality(@Param("documentId") String documentId);
 
     // Query for inequality using !=
     @Query(value = "SELECT * FROM c WHERE c.id != @documentId")
-    List<User> getUsersWithInequalityMethod1(@Param("documentId") String documentId);
+    List<WebCustomer> getUsersWithInequalityMethod1(@Param("documentId") String documentId);
 
     // Query for inequality using NOT
     @Query(value = "SELECT * FROM c WHERE c.id <> @documentId")
-    List<User> getUsersWithInequalityMethod2(@Param("documentId") String documentId);
+    List<WebCustomer> getUsersWithInequalityMethod2(@Param("documentId") String documentId);
 
     // Query combining equality and inequality
     @Query(value = "SELECT * FROM c WHERE c.lastName = @documentLastName AND c.id != @documentId")
-    List<User> getUsersWithEqualityAndInequality(@Param("documentLastName") String documentLastName, @Param("documentId") String documentId);
+    List<WebCustomer> getUsersWithEqualityAndInequality(@Param("documentLastName") String documentLastName, @Param("documentId") String documentId);
 
     // Query using range operators like >, <, >=, <=
     @Query(value = "SELECT * FROM Families f WHERE f.Children[0].Grade > 5")
-    List<User> getUsersWithRange();
+    List<WebCustomer> getUsersWithRange();
 
     // Query using range operators against strings
     @Query(value = "SELECT * FROM Families f WHERE f.Address.State > 'NY'")
-    List<User> getUsersWithRangeAgainstStrings();
+    List<WebCustomer> getUsersWithRangeAgainstStrings();
 
     // Query with ORDER BY
     @Query(value = "SELECT * FROM Families f WHERE f.LastName = 'Andersen' ORDER BY f.Children[0].Grade")
-    List<User> getUsersWithOrderBy();
+    List<WebCustomer> getUsersWithOrderBy();
 
     // Query with DISTINCT
     @Query(value = "SELECT DISTINCT c.lastName from c")
-    List<User> getUsersWithDistinct();
+    List<WebCustomer> getUsersWithDistinct();
 
     // Query with aggregate functions
     @Query(value = "SELECT VALUE COUNT(f) FROM Families f WHERE f.LastName = 'Andersen'")
-    List<User> getUsersWithAggregate();
+    List<WebCustomer> getUsersWithAggregate();
 
     // Query with aggregate functions within documents
     @Query(value = "SELECT VALUE COUNT(child) FROM child IN f.Children")
-    List<User> getUsersWithAggregateWithinDocuments();
+    List<WebCustomer> getUsersWithAggregateWithinDocuments();
 
     // Work with subdocuments
     @Query(value = "SELECT VALUE c FROM c IN f.Children")
-    List<User> getUsersSubdocuments();
+    List<WebCustomer> getUsersSubdocuments();
 
     // Query with single intra-document join
     @Query(value = "SELECT f.id FROM Families f JOIN c IN f.Children")
-    List<User> getUsersWithSingleJoin();
+    List<WebCustomer> getUsersWithSingleJoin();
 
     // Query with two joins
     @Query(value = "SELECT f.id as family, c.FirstName AS child, p.GivenName AS pet \" +\n" +
             "                                           \"FROM Families f \" +\n" +
             "                                           \"JOIN c IN f.Children \" +\n" +
             "                                           \"join p IN c.Pets\"")
-    List<User> getUsersWithTwoJoins();
+    List<WebCustomer> getUsersWithTwoJoins();
 
     // Query with two joins and a filter
     @Query(value = "SELECT f.id as family, c.FirstName AS child, p.GivenName AS pet \" +\n" +
@@ -81,17 +81,17 @@ public interface UserRepository extends CosmosRepository<User, String> {
             "                                           \"JOIN c IN f.Children \" +\n" +
             "                                           \"join p IN c.Pets \" +\n" +
             "                                           \"WHERE p.GivenName = 'Fluffy'")
-    List<User> getUsersByWithTwoJoinsAndFilter();
+    List<WebCustomer> getUsersByWithTwoJoinsAndFilter();
 
     // Query with String STARTSWITH operator
     @Query(value = "SELECT * FROM family WHERE STARTSWITH(family.LastName, 'An')")
-    List<User> getUsersWithStringStartswith();
+    List<WebCustomer> getUsersWithStringStartswith();
 
     // Query with math FLOOR operator
     @Query(value = "SELECT VALUE FLOOR(family.Children[0].Grade) FROM family")
-    List<User> getUsersWithMathFloor();
+    List<WebCustomer> getUsersWithMathFloor();
 
     // Query with array length operator
     @Query(value = "SELECT VALUE ARRAY_LENGTH(family.Children) FROM family")
-    List<User> getUsersWithArrayLength();
+    List<WebCustomer> getUsersWithArrayLength();
 }

@@ -7,18 +7,16 @@ import com.azure.spring.data.cosmos.repository.ReactiveCosmosRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
-import java.util.List;
-
 @Repository
-public interface ReactiveUserRepository extends ReactiveCosmosRepository<User, String> {
+public interface ReactiveWebCustomerRepository extends ReactiveCosmosRepository<WebCustomer, String> {
 
-    Flux<User> findByFirstName(String firstName);
+    Flux<WebCustomer> findByFirstName(String firstName);
 
-    Flux<User> findByIdAndLastName(String id, String lastName);
+    Flux<WebCustomer> findByIdAndLastName(String id, String lastName);
 
     // Query for all documents
     @Query(value = "SELECT * FROM c")
-    Flux<User> getAllUsers();
+    Flux<WebCustomer> getAllUsers();
 
 }
 

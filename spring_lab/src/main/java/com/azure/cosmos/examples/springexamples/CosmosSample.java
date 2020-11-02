@@ -5,8 +5,6 @@ package com.azure.cosmos.examples.springexamples;
 import com.azure.cosmos.examples.springexamples.common.CouponsUsed;
 import com.azure.cosmos.examples.springexamples.common.OrderHistory;
 import com.azure.cosmos.examples.springexamples.common.ShippingPreference;
-import com.azure.cosmos.models.CosmosItemRequestOptions;
-import com.azure.cosmos.models.PartitionKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 @SpringBootApplication
@@ -26,7 +23,7 @@ public class CosmosSample implements CommandLineRunner {
     private final Logger logger = LoggerFactory.getLogger(CosmosSample.class);
 
     @Autowired
-    private ReactiveUserRepository reactiveUserRepository;
+    private ReactiveWebCustomerRepository reactiveWebCustomerRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CosmosSample.class, args);
@@ -34,9 +31,9 @@ public class CosmosSample implements CommandLineRunner {
 
     public void run(String... var1) {
 
-        // Create User POJO instances
+        // Create WebCustomer POJO instances
 
-        User maxaxam = new User(
+        WebCustomer maxaxam = new WebCustomer(
                 "1",
                 "maxaxam",
                 "Axam",
@@ -67,7 +64,7 @@ public class CosmosSample implements CommandLineRunner {
                 ))
         );
 
-        User nelapin = new User(
+        WebCustomer nelapin = new WebCustomer(
                 "2",
                 "nelapin",
                 "Pindakova",
@@ -98,7 +95,7 @@ public class CosmosSample implements CommandLineRunner {
                 ))
         );
 
-        createUserDocumentsIfNotExist(new ArrayList(Arrays.asList(maxaxam, nelapin)));
+        createWebCustomerDocumentsIfNotExist(new ArrayList(Arrays.asList(maxaxam, nelapin)));
 
         /*
 
@@ -123,12 +120,12 @@ public class CosmosSample implements CommandLineRunner {
         // <Read>        
         
         // to find by Id, please specify partition key value if collection is partitioned
-        final User result = userRepository.findByIdAndLastName(testUser1.getId(), testUser1.getLastName());
+        final WebCustomer result = userRepository.findByIdAndLastName(testUser1.getId(), testUser1.getLastName());
         logger.info("Found user : {}", result);
         
         // </Read>        
         
-        Iterator<User> usersIterator = userRepository.findByFirstName("testFirstName").iterator();
+        Iterator<WebCustomer> usersIterator = userRepository.findByFirstName("testFirstName").iterator();
 
         logger.info("Users by firstName : testFirstName");
         while (usersIterator.hasNext()) {
@@ -139,7 +136,7 @@ public class CosmosSample implements CommandLineRunner {
 
         // <Query>
 
-        Flux<User> users = reactiveUserRepository.findByFirstName("testFirstName");
+        Flux<WebCustomer> users = reactiveWebCustomerRepository.findByFirstName("testFirstName");
         users.map(u -> {
             logger.info("user is : {}", u);
             return u;
@@ -153,12 +150,12 @@ public class CosmosSample implements CommandLineRunner {
 
     /**
      * Take in list of Java POJOs and insert them into the database.
-     * @param users List of User POJOs to insert.
+     * @param webCustomers List of WebCustomer POJOs to insert.
      */
-    private void createUserDocumentsIfNotExist(final List<User> users) {
-        Flux.fromIterable(users).flatMap(user -> {
-            logger.info("Creating User {}", user.getId());
-            return this.reactiveUserRepository.save(user);
+    private void createWebCustomerDocumentsIfNotExist(final List<WebCustomer> webCustomers) {
+        Flux.fromIterable(webCustomers).flatMap(webCustomer -> {
+            logger.info("Creating WebCustomer {}", webCustomer.getId());
+            return this.reactiveWebCustomerRepository.save(webCustomer);
         }).blockLast();
     }
 }

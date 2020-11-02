@@ -11,24 +11,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ShippingPreference {
 
-    /** User's preferred shipping priority. */
+    /** WebCustomer's preferred shipping priority. */
     private int priority;
 
-    /** User address line 1. */
+    /** WebCustomer address line 1. */
     private String addressLine1;
 
-    /** User address line 2. */
+    /** WebCustomer address line 2. */
     private String addressLine2;
 
-    /** User address city. */
+    /** WebCustomer address city. */
     private String city;
 
-    /** User address state. */
+    /** WebCustomer address state. */
     private String state;
 
-    /** User address zip code. */
+    /** WebCustomer address zip code. */
     private String zipCode;
 
-    /** User address country. */
+    /** WebCustomer address country. */
     private String country;
 }

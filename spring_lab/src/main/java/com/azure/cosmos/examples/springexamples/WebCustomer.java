@@ -16,32 +16,32 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Container(containerName = "WebCustomers", ru = "400")
-public class User {
+@Container(containerName = "WebCustomer", ru = "400")
+public class WebCustomer {
 
     /** Document ID (required by Azure Cosmos DB). */
     private String id;
 
-    /** User ID. */
+    /** WebCustomer ID. */
     private String userId;
 
-    /** User last name. */
+    /** WebCustomer last name. */
     @PartitionKey
     private String lastName;
 
-    /** User first name. */
+    /** WebCustomer first name. */
     private String firstName;
 
-    /** User email address. */
+    /** WebCustomer email address. */
     private String email;
 
-    /** User dividend setting. */
+    /** WebCustomer dividend setting. */
     private String dividend;
 
-    /** User shipping preferences. */
+    /** WebCustomer shipping preferences. */
     private ShippingPreference shippingPreference;
 
-    /** User order history. */
+    /** WebCustomer order history. */
     private List<OrderHistory> orderHistory;
 
     /** Coupons recorded by the user. */
