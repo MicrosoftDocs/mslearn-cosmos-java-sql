@@ -117,52 +117,6 @@ public class CosmosSample implements CommandLineRunner {
         }).blockLast();
 
         deleteWebCustomerDocument(maxaxam);
-
-        /*
-
-        logger.info("Using sync repository");
-
-        // <Delete>
-
-        userRepository.deleteAll();
-
-        // </Delete>
-
-        // <Create>
-
-        logger.info("Saving user : {}", testUser1);
-        userRepository.save(testUser1);
-
-        // </Create>
-
-        logger.info("Saving user : {}", testUser2);
-        userRepository.save(testUser2);
-
-        // <Read>        
-        
-        // to find by Id, please specify partition key value if collection is partitioned
-        final WebCustomer result = userRepository.findByIdAndLastName(testUser1.getId(), testUser1.getLastName());
-        logger.info("Found user : {}", result);
-        
-        // </Read>        
-        
-        Iterator<WebCustomer> usersIterator = userRepository.findByFirstName("testFirstName").iterator();
-
-        logger.info("Users by firstName : testFirstName");
-        while (usersIterator.hasNext()) {
-            logger.info("user is : {}", usersIterator.next());
-        }
-
-        logger.info("Using reactive repository");
-
-        // <Query>
-
-
-
-        // </Query>
-
-
-         */
     }
 
     /**
