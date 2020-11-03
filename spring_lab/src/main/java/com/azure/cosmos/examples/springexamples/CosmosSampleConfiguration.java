@@ -32,11 +32,7 @@ public class CosmosSampleConfiguration extends AbstractCosmosConfiguration {
 
     @Bean
     public CosmosClientBuilder cosmosClientBuilder() {
-        DirectConnectionConfig directConnectionConfig = DirectConnectionConfig.getDefaultConfig();
-        return new CosmosClientBuilder()
-            .endpoint(properties.getUri())
-            .key(properties.getKey())
-            .directMode(directConnectionConfig);
+        return null;
     }
 
     @Bean
@@ -49,7 +45,7 @@ public class CosmosSampleConfiguration extends AbstractCosmosConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "Users";
+        return "";
     }
 
     private static class ResponseDiagnosticsProcessorImplementation implements ResponseDiagnosticsProcessor {

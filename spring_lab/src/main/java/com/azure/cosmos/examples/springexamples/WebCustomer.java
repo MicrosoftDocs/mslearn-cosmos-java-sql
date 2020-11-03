@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Container(containerName = "WebCustomer", ru = "400")
+@Container(containerName = "", ru = "")
 public class WebCustomer {
 
     /** Document ID (required by Azure Cosmos DB). */
