@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 package com.azure.cosmos.examples.springexamples;
 
+import com.azure.cosmos.CosmosException;
 import com.azure.cosmos.examples.springexamples.common.CouponsUsed;
 import com.azure.cosmos.examples.springexamples.common.OrderHistory;
 import com.azure.cosmos.examples.springexamples.common.ShippingPreference;
+import com.azure.cosmos.models.CosmosItemResponse;
+import com.azure.cosmos.models.PartitionKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,6 +100,23 @@ public class CosmosSample implements CommandLineRunner {
         );
 
         createWebCustomerDocumentsIfNotExist(new ArrayList(Arrays.asList(maxaxam, nelapin)));
+        readWebCustomerDocument(maxaxam);
+
+        logger.info("Running derived query...");
+        Flux<WebCustomer> webCustomers = reactiveWebCustomerRepository.findByFirstName("Max");
+        webCustomers.flatMap(webCustomer -> {
+            logger.info("- WebCustomer is : {}", webCustomer.getUserId());
+            return Mono.empty();
+        }).blockLast();
+
+        logger.info("Running custom query...");
+        webCustomers = reactiveWebCustomerRepository.findByLastName("Axam");
+        webCustomers.flatMap(webCustomer -> {
+            logger.info("- WebCustomer is : {}", webCustomer.getUserId());
+            return Mono.empty();
+        }).blockLast();
+
+        deleteWebCustomerDocument(maxaxam);
 
         /*
 
@@ -136,11 +157,7 @@ public class CosmosSample implements CommandLineRunner {
 
         // <Query>
 
-        Flux<WebCustomer> users = reactiveWebCustomerRepository.findByFirstName("testFirstName");
-        users.map(u -> {
-            logger.info("user is : {}", u);
-            return u;
-        }).subscribe();
+
 
         // </Query>
 
@@ -157,5 +174,37 @@ public class CosmosSample implements CommandLineRunner {
             logger.info("Creating WebCustomer {}", webCustomer.getId());
             return this.reactiveWebCustomerRepository.save(webCustomer);
         }).blockLast();
+    }
+
+    /**
+     * Take in a Java POJO argument, extract ID and partition key, and read the corresponding document from the container.
+     * In this case the ID is the partition key.
+     * @param webCustomer User POJO to pull ID and partition key from.
+     */
+    private WebCustomer readWebCustomerDocument(final WebCustomer webCustomer) {
+        WebCustomer webCustomerResult = null;
+
+        try {
+            logger.info("Read webCustomer {}", webCustomer.getId());
+            webCustomerResult = this.reactiveWebCustomerRepository.findById(webCustomer.getId(), new PartitionKey(webCustomer.getLastName())).block();
+        } catch (CosmosException de) {
+            logger.error("Failed to read webCustomer {}", webCustomer.getId(), de);
+        }
+
+        return webCustomer;
+    }
+
+    /**
+     * Take in a Java POJO argument, extract ID and partition key,
+     * and delete the corresponding document.
+     * @param webCustomer User POJO representing the document update.
+     */
+    private void deleteWebCustomerDocument(final WebCustomer webCustomer) {
+        try {
+            this.reactiveWebCustomerRepository.deleteById(webCustomer.getId(),new PartitionKey(webCustomer.getLastName())).block();
+            logger.info("Deleted webCustomer {}", webCustomer.getId());
+        } catch (CosmosException de) {
+            logger.error("User {} could not be deleted.", webCustomer.getId());
+        }
     }
 }
