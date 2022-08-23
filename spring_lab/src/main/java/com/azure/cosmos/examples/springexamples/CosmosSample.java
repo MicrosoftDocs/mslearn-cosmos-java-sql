@@ -10,7 +10,6 @@ import com.azure.cosmos.models.CosmosItemResponse;
 import com.azure.cosmos.models.PartitionKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,8 +25,12 @@ public class CosmosSample implements CommandLineRunner {
 
     private final Logger logger = LoggerFactory.getLogger(CosmosSample.class);
 
-    @Autowired
     private ReactiveWebCustomerRepository reactiveWebCustomerRepository;
+
+    // use constructor injection for spring dependencies
+    public CosmosSample(ReactiveWebCustomerRepository reactiveWebCustomerRepository) {
+        this.reactiveWebCustomerRepository = reactiveWebCustomerRepository;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(CosmosSample.class, args);

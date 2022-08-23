@@ -11,8 +11,8 @@
     </name>
 
     <properties>
-        <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
-        <azure.spring.data.cosmos.version>3.1.0</azure.spring.data.cosmos.version>
+        <spring.boot.version>2.7.1</spring.boot.version>
+        <azure.spring.data.cosmos.version>3.24.0</azure.spring.data.cosmos.version>
     </properties>
 
     <dependencies>
