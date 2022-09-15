@@ -1,6 +1,6 @@
 # Java/Spring templates for "Build a Java app for Azure Cosmos DB" MSLearn module
 
-In [Build a Java app for Azure Cosmos DB](), you will build a Java console application to create, update, and delete user records, query your data, and perform stored procedures using Java.
+In [Build a Java app for Azure Cosmos DB](https://docs.microsoft.com/training/modules/build-cosmos-db-java-app/), you will build a Java console application to create, update, and delete user records, query your data, and perform stored procedures using Java.
 
 We have provided a GitHub repo which you may use as a template for your application.
 
