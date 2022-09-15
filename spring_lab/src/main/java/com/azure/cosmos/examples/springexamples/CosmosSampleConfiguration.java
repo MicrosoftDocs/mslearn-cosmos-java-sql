@@ -12,7 +12,6 @@ import com.azure.spring.data.cosmos.repository.config.EnableCosmosRepositories;
 import com.azure.spring.data.cosmos.repository.config.EnableReactiveCosmosRepositories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +26,12 @@ import org.springframework.lang.Nullable;
 public class CosmosSampleConfiguration extends AbstractCosmosConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(CosmosSampleConfiguration.class);
 
-    @Autowired
     private CosmosProperties properties;
+
+    //use constructor injection for spring dependencies 
+    public CosmosSampleConfiguration(CosmosProperties properties){
+        this.properties = properties;
+    }
 
     @Bean
     public CosmosClientBuilder cosmosClientBuilder() {
